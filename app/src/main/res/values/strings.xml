@@ -1,3 +1,13 @@
 <resources>
     <string name="app_name">Dictio</string>
+    <string name="mydictionaries">My dictionaries</string>
+    <string name="buttonAddDictionary">Add dictionary</string>
+    <string name="create">Create</string>
+    <string name="language">Language</string>
+    <string name="errorGettingDicts">Error happened while retrieving data for dictionaries</string>
+    <string name="errorGettingTerms">Error happened while retrieving data for terms</string>
+    <string name="errorInsertingDict">Error happened while adding dictionary</string>
+    <string name="errorInsertingTerm">Error happened while adding term</string>
+    <string name="errorDeletingDict">Error happened while deleting dictionary</string>
+    <string name="errorDeletingTerm">Error happened while deleting term</string>
 </resources>
