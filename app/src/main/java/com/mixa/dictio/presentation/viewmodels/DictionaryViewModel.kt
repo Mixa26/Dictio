@@ -14,6 +14,9 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import timber.log.Timber
 
+/**
+ * Regulates requests from the view to the model, hence the name ViewModel...get it eh?...nvm.
+ */
 class DictionaryViewModel(
     private val dictionaryRepository: DictionaryRepository
 ): ViewModel(), MainContract.DictionaryViewModel {
@@ -23,6 +26,10 @@ class DictionaryViewModel(
     override val insertDictionaryState: MutableLiveData<InsertDictionaryState> = MutableLiveData()
     override val deleteDictionaryState: MutableLiveData<DeleteDictionaryState> = MutableLiveData()
 
+    /**
+     * Get's all the dictionaries from the database and subscribes the result to be delivered
+     * to the main thread.
+     */
     override fun getAll() {
         val subscription = dictionaryRepository
             .getAll()
@@ -40,6 +47,9 @@ class DictionaryViewModel(
         subscriptions.add(subscription)
     }
 
+    /**
+     * Inserts a dictionary to the database.
+     */
     override fun insert(dictionary: DictionaryEntity) {
         val subscription = dictionaryRepository
             .insert(dictionary)
@@ -57,6 +67,9 @@ class DictionaryViewModel(
         subscriptions.add(subscription)
     }
 
+    /**
+     * Deletes a dictionary from the database.
+     */
     override fun delete(dictionary: DictionaryEntity) {
         val subscription = dictionaryRepository
             .delete(dictionary)
@@ -74,6 +87,10 @@ class DictionaryViewModel(
         subscriptions.add(subscription)
     }
 
+    /**
+     * Interrupts all ongoing requested in the subscriptions if the user switched to another screen
+     * or something of a kind happens.
+     */
     override fun onCleared() {
         super.onCleared()
         subscriptions.dispose()

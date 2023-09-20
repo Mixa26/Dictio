@@ -5,6 +5,9 @@ import com.mixa.dictio.data.models.DictionaryEntity
 import io.reactivex.Completable
 import io.reactivex.Observable
 
+/**
+ * Repositories let us establish communication between the ViewModel and the database.
+ */
 class DictionaryRepositoryImpl(
     private val database: DictionaryDao
 ): DictionaryRepository {

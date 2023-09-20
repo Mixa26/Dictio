@@ -14,6 +14,9 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import timber.log.Timber
 
+/**
+ * Regulates requests from the view to the model, hence the name ViewModel...get it eh?...nvm.
+ */
 class TermViewModel(
     private val termRepository: TermRepository
 ): ViewModel() , MainContract.TermViewModel {
@@ -23,6 +26,11 @@ class TermViewModel(
     override val insertTermState: MutableLiveData<InsertTermState> = MutableLiveData()
     override val deleteTermState: MutableLiveData<DeleteTermState> = MutableLiveData()
 
+    /**
+     * Get's all the terms by dictionary id that it's connected to
+     * from the database and subscribes the result to be delivered
+     * to the main thread.
+     */
     override fun getAllByDictId(dictionaryId: Int) {
         val subscription = termRepository
             .getAllByDictId(dictionaryId)
@@ -40,6 +48,9 @@ class TermViewModel(
         subscriptions.add(subscription)
     }
 
+    /**
+     * Inserts a term to the database.
+     */
     override fun insert(term: TermEntity) {
         val subscription = termRepository
             .insert(term)
@@ -57,6 +68,9 @@ class TermViewModel(
         subscriptions.add(subscription)
     }
 
+    /**
+     * Deletes a term from the database.
+     */
     override fun delete(term: TermEntity) {
         val subscription = termRepository
             .insert(term)
@@ -74,6 +88,10 @@ class TermViewModel(
         subscriptions.add(subscription)
     }
 
+    /**
+     * Interrupts all ongoing requested in the subscriptions if the user switched to another screen
+     * or something of a kind happens.
+     */
     override fun onCleared() {
         super.onCleared()
         subscriptions.dispose()

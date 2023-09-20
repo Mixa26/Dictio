@@ -7,6 +7,13 @@ import com.mixa.dictio.data.datasources.TermDao
 import com.mixa.dictio.data.models.DictionaryEntity
 import com.mixa.dictio.data.models.TermEntity
 
+/**
+ * This is the Room database, we must declare all the entities here and provide
+ * Dao's (data access objects). Any time anything is changed in the database
+ * (a field in the entity, new entity is added) the version number must be changed,
+ * or we can delete the apps data in the phone and not change the number of the
+ * version.
+ */
 @Database(
     entities = [
         DictionaryEntity::class,

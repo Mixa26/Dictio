@@ -9,6 +9,10 @@ import com.mixa.dictio.data.models.DictionaryEntity
 import io.reactivex.Completable
 import io.reactivex.Observable
 
+/**
+ * Dao's let us communicate with the database.
+ * Check https://developer.android.com/training/data-storage/room for more info.
+ */
 @Dao
 interface DictionaryDao {
 

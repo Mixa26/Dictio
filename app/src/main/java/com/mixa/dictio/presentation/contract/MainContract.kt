@@ -10,6 +10,9 @@ import com.mixa.dictio.presentation.view.states.InsertDictionaryState
 import com.mixa.dictio.presentation.view.states.InsertTermState
 import com.mixa.dictio.presentation.view.states.TermState
 
+/**
+ * We define interfaces for the ViewModels in the MainContract.
+ */
 interface MainContract {
     interface DictionaryViewModel{
 
