@@ -6,6 +6,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.snackbar.Snackbar
 import com.mixa.dictio.R
 import com.mixa.dictio.data.models.DictionaryEntity
 import com.mixa.dictio.databinding.ActivityMainBinding
@@ -21,7 +22,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MainActivity : AppCompatActivity(){
     lateinit var binding: ActivityMainBinding
-    private val dictionaryViewModel: MainContract.DictionaryViewModel by viewModel<DictionaryViewModel>()
+    val dictionaryViewModel: MainContract.DictionaryViewModel by viewModel<DictionaryViewModel>()
 
     lateinit var recyclerViewAdapter: DictionaryAdapter
 
@@ -105,7 +106,7 @@ class MainActivity : AppCompatActivity(){
     private fun renderInsertDictState(state: InsertDictionaryState){
         when(state){
             is InsertDictionaryState.Success -> {
-                TODO("Add the new dictionary to RecyclerView")
+                Snackbar.make(binding.root, R.string.successInsertingDict, Toast.LENGTH_SHORT).show()
             }
             is InsertDictionaryState.Error -> {
                 Toast.makeText(this, state.messageResourceId, Toast.LENGTH_LONG).show()
@@ -116,8 +117,7 @@ class MainActivity : AppCompatActivity(){
     private fun renderDeleteDictState(state: DeleteDictionaryState){
         when(state){
             is DeleteDictionaryState.Success -> {
-                TODO("Delete the dictionary from RecyclerView" +
-                        "and from a temporary list if any was mode")
+                Snackbar.make(binding.root, R.string.successDeletingDict, Toast.LENGTH_SHORT).show()
             }
             is DeleteDictionaryState.Error -> {
                 Toast.makeText(this, state.messageResourceId, Toast.LENGTH_LONG).show()

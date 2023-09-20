@@ -3,6 +3,7 @@
     <string name="mydictionaries">My dictionaries</string>
     <string name="buttonAddDictionary">Add dictionary</string>
     <string name="create">Create</string>
+    <string name="delete">Delete</string>
     <string name="language">Language</string>
     <string name="errorGettingDicts">Error happened while retrieving data for dictionaries</string>
     <string name="errorGettingTerms">Error happened while retrieving data for terms</string>
@@ -10,4 +11,7 @@
     <string name="errorInsertingTerm">Error happened while adding term</string>
     <string name="errorDeletingDict">Error happened while deleting dictionary</string>
     <string name="errorDeletingTerm">Error happened while deleting term</string>
+    <string name="successInsertingDict">New dictionary added!</string>
+    <string name="successDeletingDict">Dictionary deleted</string>
+    <string name="confirmationDictDeletion">Are you sure you want to delete the dictionary?</string>
 </resources>
