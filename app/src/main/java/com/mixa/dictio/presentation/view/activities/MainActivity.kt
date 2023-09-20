@@ -5,11 +5,14 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.mixa.dictio.R
 import com.mixa.dictio.data.models.DictionaryEntity
 import com.mixa.dictio.databinding.ActivityMainBinding
 import com.mixa.dictio.databinding.DialogAddDictionaryBinding
 import com.mixa.dictio.presentation.contract.MainContract
+import com.mixa.dictio.presentation.recycler.adapter.DictionaryAdapter
+import com.mixa.dictio.presentation.recycler.differ.DictionaryDiffItemCallback
 import com.mixa.dictio.presentation.view.states.DeleteDictionaryState
 import com.mixa.dictio.presentation.view.states.DictionaryState
 import com.mixa.dictio.presentation.view.states.InsertDictionaryState
@@ -18,7 +21,9 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MainActivity : AppCompatActivity(){
     lateinit var binding: ActivityMainBinding
-    val dictionaryViewModel: MainContract.DictionaryViewModel by viewModel<DictionaryViewModel>()
+    private val dictionaryViewModel: MainContract.DictionaryViewModel by viewModel<DictionaryViewModel>()
+
+    lateinit var recyclerViewAdapter: DictionaryAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,10 +39,18 @@ class MainActivity : AppCompatActivity(){
         initUI()
         initListeners()
         initObservers()
+
     }
 
     private fun initUI(){
         supportActionBar?.title = getString(R.string.mydictionaries)
+        initRecyclerView()
+    }
+
+    private fun initRecyclerView(){
+        recyclerViewAdapter = DictionaryAdapter(DictionaryDiffItemCallback())
+        binding.dictionaryRecyclerView.adapter = recyclerViewAdapter
+        binding.dictionaryRecyclerView.layoutManager = LinearLayoutManager(this)
     }
 
     private fun initListeners(){
@@ -74,13 +87,14 @@ class MainActivity : AppCompatActivity(){
         dictionaryViewModel.deleteDictionaryState.observe(this) {
             renderDeleteDictState(it)
         }
+
+        dictionaryViewModel.getAll()
     }
 
     private fun renderGetDictState(state: DictionaryState){
         when(state){
             is DictionaryState.Success -> {
-                TODO("Add the gathered dictionaries to RecyclerView" +
-                        "or to some kind of list and then to RecyclerView")
+                recyclerViewAdapter.submitList(state.dictionaries)
             }
             is DictionaryState.Error -> {
                 Toast.makeText(this, state.messageResourceId, Toast.LENGTH_LONG).show()
