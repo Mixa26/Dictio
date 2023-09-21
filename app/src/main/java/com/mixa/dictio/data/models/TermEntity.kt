@@ -7,7 +7,7 @@ import androidx.room.PrimaryKey
 data class TermEntity (
     @PrimaryKey(autoGenerate = true)
     val id: Int?,
-    var term: String?,
-    var translation: String?,
+    var term: String,
+    var translation: String,
     var dictionaryId: Int
 )

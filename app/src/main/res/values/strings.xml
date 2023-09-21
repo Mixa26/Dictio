@@ -12,6 +12,13 @@
     <string name="errorDeletingDict">Error happened while deleting dictionary</string>
     <string name="errorDeletingTerm">Error happened while deleting term</string>
     <string name="successInsertingDict">New dictionary added!</string>
+    <string name="successInsertingTerm">New term added!</string>
     <string name="successDeletingDict">Dictionary deleted</string>
+    <string name="successDeletingTerm">Term deleted</string>
     <string name="confirmationDictDeletion">Are you sure you want to delete the dictionary?</string>
+    <string name="confirmationTermDeletion">Are you sure you want to delete the term?</string>
+    <string name="termForeign">foreign word</string>
+    <string name="termMeaning">it\'s meaning</string>
+    <string name="addTerm">Add translation</string>
+    <string name="badInputTermAndTranslation">Both the term and the translation have to be inputted.</string>
 </resources>
