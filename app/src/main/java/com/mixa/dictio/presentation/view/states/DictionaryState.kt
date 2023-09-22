@@ -1,6 +1,6 @@
 package com.mixa.dictio.presentation.view.states
 
-import com.mixa.dictio.data.models.DictionaryEntity
+import com.mixa.dictio.data.models.entities.DictionaryEntity
 
 /**
  * State for retrieving dictionaries.

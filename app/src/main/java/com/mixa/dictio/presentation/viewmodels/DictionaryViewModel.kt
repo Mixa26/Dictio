@@ -3,7 +3,7 @@ package com.mixa.dictio.presentation.viewmodels
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.mixa.dictio.R
-import com.mixa.dictio.data.models.DictionaryEntity
+import com.mixa.dictio.data.models.entities.DictionaryEntity
 import com.mixa.dictio.data.repository.DictionaryRepository
 import com.mixa.dictio.presentation.contract.MainContract
 import com.mixa.dictio.presentation.view.states.DeleteDictionaryState

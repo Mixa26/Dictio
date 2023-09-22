@@ -1,6 +1,5 @@
 package com.mixa.dictio.presentation.view.fragments
 
-import android.app.AlertDialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -10,21 +9,16 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import com.mixa.dictio.R
-import com.mixa.dictio.data.models.DictionaryEntity
-import com.mixa.dictio.data.models.TermEntity
-import com.mixa.dictio.databinding.DialogAddDictionaryBinding
+import com.mixa.dictio.data.models.entities.TermEntity
+import com.mixa.dictio.data.models.requests.TranslateRequest
 import com.mixa.dictio.databinding.FragmentTermsBinding
-import com.mixa.dictio.presentation.recycler.adapter.DictionaryAdapter
 import com.mixa.dictio.presentation.recycler.adapter.TermAdapter
-import com.mixa.dictio.presentation.recycler.differ.DictionaryDiffItemCallback
 import com.mixa.dictio.presentation.recycler.differ.TermDiffItemCallback
 import com.mixa.dictio.presentation.view.activities.MainActivity
-import com.mixa.dictio.presentation.view.states.DeleteDictionaryState
 import com.mixa.dictio.presentation.view.states.DeleteTermState
-import com.mixa.dictio.presentation.view.states.DictionaryState
-import com.mixa.dictio.presentation.view.states.InsertDictionaryState
 import com.mixa.dictio.presentation.view.states.InsertTermState
 import com.mixa.dictio.presentation.view.states.TermState
+import com.mixa.dictio.presentation.view.states.TranslateState
 
 class TermsFragment(private val language: String, private val dictId: Int): Fragment() {
     //We can access all the UI xml elements from the binding.
@@ -86,6 +80,20 @@ class TermsFragment(private val language: String, private val dictId: Int): Frag
             (context as MainActivity).supportFragmentManager.beginTransaction().replace(R.id.mainActivityLayout, DictionariesFragment()).commit()
         }
 
+        //When the translate button is pressed contact the API
+        binding.termTranslateButton.setOnClickListener{
+            if (binding.termTranslateInput.toString().isNotEmpty()){
+                val request = TranslateRequest(
+                    binding.termTranslateInput.toString(),
+                    "it",
+                    "en",
+                    "text",
+                    ""
+                )
+                (context as MainActivity).termViewModel.translate(request)
+            }
+        }
+
         //When a term is added this listener is triggered on the button click.
         binding.addTermButton.setOnClickListener{
             if (binding.termForeign.text.toString().isNotEmpty() && binding.termMeaning.text.toString().isNotEmpty()){
@@ -119,6 +127,10 @@ class TermsFragment(private val language: String, private val dictId: Int): Frag
         (context as MainActivity).termViewModel.deleteTermState.observe(viewLifecycleOwner) {
             //Rendering of deleting data from the DB.
             renderDeleteTermState(it)
+        }
+        (context as MainActivity).termViewModel.translateState.observe(viewLifecycleOwner) {
+            //Render the received translated text from the API
+            renderTranslateState(it)
         }
 
         //We request data at the beginning so that we can present it to the user.
@@ -166,7 +178,7 @@ class TermsFragment(private val language: String, private val dictId: Int): Frag
 
     /**
      * Regulates a response after a term is deleted
-     * from the database
+     * from the database.
      */
     private fun renderDeleteTermState(state: DeleteTermState?){
         when(state){
@@ -182,6 +194,26 @@ class TermsFragment(private val language: String, private val dictId: Int): Frag
                 Toast.makeText(context, state.messageResourceId, Toast.LENGTH_LONG).show()
             }
             else -> {}
+        }
+    }
+
+    /**
+     * Regulates the API response for the translated text.
+     */
+    private fun renderTranslateState(state: TranslateState){
+        when(state){
+            is TranslateState.Success -> {
+                //If the word was translated correctly, input the foreign word
+                //and it's translation in the slots for adding a new term.
+                binding.termForeign.setText(binding.termTranslateInput.text.toString())
+                //Clear the input for the translation.
+                binding.termTranslateInput.setText("")
+                binding.termMeaning.setText(state.translation.translatedText)
+            }
+            is TranslateState.Error -> {
+                //If the translation was a failure, alert us through a Toast.
+                Toast.makeText(context, state.messageResourceId, Toast.LENGTH_LONG).show()
+            }
         }
     }
 

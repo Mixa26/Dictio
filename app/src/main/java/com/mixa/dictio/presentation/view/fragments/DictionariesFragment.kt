@@ -10,7 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import com.mixa.dictio.R
-import com.mixa.dictio.data.models.DictionaryEntity
+import com.mixa.dictio.data.models.entities.DictionaryEntity
 import com.mixa.dictio.databinding.DialogAddDictionaryBinding
 import com.mixa.dictio.databinding.FragmentDictionariesBinding
 import com.mixa.dictio.presentation.recycler.adapter.DictionaryAdapter

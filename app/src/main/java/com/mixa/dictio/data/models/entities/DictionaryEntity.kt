@@ -1,4 +1,4 @@
-package com.mixa.dictio.data.models
+package com.mixa.dictio.data.models.entities
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

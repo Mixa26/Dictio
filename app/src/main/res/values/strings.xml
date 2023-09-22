@@ -5,15 +5,17 @@
     <string name="create">Create</string>
     <string name="delete">Delete</string>
     <string name="language">Language</string>
-    <string name="errorGettingDicts">Error happened while retrieving data for dictionaries</string>
-    <string name="errorGettingTerms">Error happened while retrieving data for terms</string>
-    <string name="errorInsertingDict">Error happened while adding dictionary</string>
-    <string name="errorInsertingTerm">Error happened while adding term</string>
-    <string name="errorDeletingDict">Error happened while deleting dictionary</string>
-    <string name="errorDeletingTerm">Error happened while deleting term</string>
+    <string name="translate">Translate</string>
+    <string name="translateHint">Enter text</string>
+    <string name="errorGettingDicts">Error happened while retrieving data for dictionaries!</string>
+    <string name="errorGettingTerms">Error happened while retrieving data for terms!</string>
+    <string name="errorInsertingDict">Error happened while adding dictionary!</string>
+    <string name="errorInsertingTerm">Error happened while adding term!</string>
+    <string name="errorDeletingDict">Error happened while deleting dictionary!</string>
+    <string name="errorDeletingTerm">Error happened while deleting term!</string>
     <string name="successInsertingDict">New dictionary added!</string>
     <string name="successInsertingTerm">New term added!</string>
-    <string name="successDeletingDict">Dictionary deleted</string>
+    <string name="successDeletingDict">Dictionary deleted.</string>
     <string name="successDeletingTerm">Term deleted</string>
     <string name="confirmationDictDeletion">Are you sure you want to delete the dictionary?</string>
     <string name="confirmationTermDeletion">Are you sure you want to delete the term?</string>
@@ -21,4 +23,5 @@
     <string name="termMeaning">it\'s meaning</string>
     <string name="addTerm">Add translation</string>
     <string name="badInputTermAndTranslation">Both the term and the translation have to be inputted.</string>
+    <string name="errorTranslating">Error happened while translating!</string>
 </resources>

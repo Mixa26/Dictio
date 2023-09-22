@@ -2,6 +2,7 @@ package com.mixa.dictio.application
 
 import android.app.Application
 import com.mixa.dictio.modules.dictionaryModule
+import com.mixa.dictio.modules.retrofitModule
 import com.mixa.dictio.modules.roomModule
 import com.mixa.dictio.modules.termModule
 import org.koin.android.ext.koin.androidContext
@@ -41,7 +42,8 @@ class DictioApplication: Application() {
             modules(
                 roomModule,
                 dictionaryModule,
-                termModule
+                termModule,
+                retrofitModule
             )
         }
     }

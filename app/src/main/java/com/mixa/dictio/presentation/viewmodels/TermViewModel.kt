@@ -3,12 +3,14 @@ package com.mixa.dictio.presentation.viewmodels
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.mixa.dictio.R
-import com.mixa.dictio.data.models.TermEntity
+import com.mixa.dictio.data.models.entities.TermEntity
+import com.mixa.dictio.data.models.requests.TranslateRequest
 import com.mixa.dictio.data.repository.TermRepository
 import com.mixa.dictio.presentation.contract.MainContract
 import com.mixa.dictio.presentation.view.states.DeleteTermState
 import com.mixa.dictio.presentation.view.states.InsertTermState
 import com.mixa.dictio.presentation.view.states.TermState
+import com.mixa.dictio.presentation.view.states.TranslateState
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
@@ -18,13 +20,14 @@ import timber.log.Timber
  * Regulates requests from the view to the model, hence the name ViewModel...get it eh?...nvm.
  */
 class TermViewModel(
-    private val termRepository: TermRepository
+    private val termRepository: TermRepository,
 ): ViewModel() , MainContract.TermViewModel {
 
     private val subscriptions = CompositeDisposable()
     override val termState: MutableLiveData<TermState> = MutableLiveData()
     override val insertTermState: MutableLiveData<InsertTermState?> = MutableLiveData()
     override val deleteTermState: MutableLiveData<DeleteTermState?> = MutableLiveData()
+    override val translateState: MutableLiveData<TranslateState> = MutableLiveData()
 
     /**
      * Sets the state to null so that if we enter the fragment again,
@@ -102,6 +105,26 @@ class TermViewModel(
                 },
                 {
                     deleteTermState.value = DeleteTermState.Error(R.string.errorDeletingTerm)
+                    Timber.e(it)
+                }
+            )
+        subscriptions.add(subscription)
+    }
+
+    /**
+     * Calls an API to get the translation.
+     */
+    override fun translate(request: TranslateRequest) {
+        val subscription = termRepository
+            .translate(request)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(
+                {
+                    translateState.value = TranslateState.Success(it)
+                },
+                {
+                    translateState.value = TranslateState.Error(R.string.errorTranslating)
                     Timber.e(it)
                 }
             )

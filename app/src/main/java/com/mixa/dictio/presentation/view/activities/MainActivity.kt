@@ -1,23 +1,12 @@
 package com.mixa.dictio.presentation.view.activities
 
-import android.app.AlertDialog
 import android.os.Bundle
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
-import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.android.material.snackbar.Snackbar
 import com.mixa.dictio.R
-import com.mixa.dictio.data.models.DictionaryEntity
 import com.mixa.dictio.databinding.ActivityMainBinding
-import com.mixa.dictio.databinding.DialogAddDictionaryBinding
 import com.mixa.dictio.presentation.contract.MainContract
-import com.mixa.dictio.presentation.recycler.adapter.DictionaryAdapter
-import com.mixa.dictio.presentation.recycler.differ.DictionaryDiffItemCallback
 import com.mixa.dictio.presentation.view.fragments.DictionariesFragment
-import com.mixa.dictio.presentation.view.states.DeleteDictionaryState
-import com.mixa.dictio.presentation.view.states.DictionaryState
-import com.mixa.dictio.presentation.view.states.InsertDictionaryState
 import com.mixa.dictio.presentation.viewmodels.DictionaryViewModel
 import com.mixa.dictio.presentation.viewmodels.TermViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel

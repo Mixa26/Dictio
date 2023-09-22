@@ -1,6 +1,8 @@
 package com.mixa.dictio.modules
 
 import com.mixa.dictio.data.database.DictioDatabase
+import com.mixa.dictio.data.datasources.local.TermDao
+import com.mixa.dictio.data.datasources.remote.TranslateService
 import com.mixa.dictio.data.repository.TermRepository
 import com.mixa.dictio.data.repository.TermRepositoryImpl
 import com.mixa.dictio.presentation.viewmodels.TermViewModel
@@ -11,7 +13,9 @@ val termModule = module {
 
     viewModel { TermViewModel(get()) }
 
-    single<TermRepository> { TermRepositoryImpl(get()) }
+    single<TermRepository> { TermRepositoryImpl(get(), get()) }
 
-    single { get<DictioDatabase>().getTermDao() }
+    single<TermDao> { get<DictioDatabase>().getTermDao() }
+
+    single<TranslateService> { create(get()) }
 }

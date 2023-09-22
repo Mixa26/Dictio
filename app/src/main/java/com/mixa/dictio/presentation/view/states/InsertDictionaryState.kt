@@ -1,7 +1,5 @@
 package com.mixa.dictio.presentation.view.states
 
-import com.mixa.dictio.data.models.DictionaryEntity
-
 /**
  * State for inserting dictionaries.
  */

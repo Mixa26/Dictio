@@ -1,7 +1,7 @@
 package com.mixa.dictio.presentation.recycler.differ
 
 import androidx.recyclerview.widget.DiffUtil
-import com.mixa.dictio.data.models.DictionaryEntity
+import com.mixa.dictio.data.models.entities.DictionaryEntity
 
 /**
  * This class is needed by the recycler view for data representation.

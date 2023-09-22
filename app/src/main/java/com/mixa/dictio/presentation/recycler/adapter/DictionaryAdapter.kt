@@ -5,12 +5,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
 import com.mixa.dictio.R
-import com.mixa.dictio.data.models.DictionaryEntity
+import com.mixa.dictio.data.models.entities.DictionaryEntity
 import com.mixa.dictio.presentation.recycler.differ.DictionaryDiffItemCallback
 import com.mixa.dictio.presentation.view.activities.MainActivity
 import com.mixa.dictio.presentation.view.fragments.TermsFragment

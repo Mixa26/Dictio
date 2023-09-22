@@ -1,11 +1,11 @@
-package com.mixa.dictio.data.datasources
+package com.mixa.dictio.data.datasources.local
 
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.mixa.dictio.data.models.DictionaryEntity
+import com.mixa.dictio.data.models.entities.DictionaryEntity
 import io.reactivex.Completable
 import io.reactivex.Observable
 

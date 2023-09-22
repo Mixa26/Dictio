@@ -91,6 +91,9 @@ dependencies {
     //Timber
     implementation 'com.jakewharton.timber:timber:5.0.1'
 
+    //PICASSO
+    implementation 'com.squareup.picasso:picasso:2.71828'
+
     //Koin
     implementation("io.insert-koin:koin-android:3.4.2")
 
@@ -103,4 +106,22 @@ dependencies {
     implementation "androidx.room:room-runtime:$roomVersion"
     ksp "androidx.room:room-compiler:$roomVersion"
     implementation "androidx.room:room-rxjava2:$roomVersion"
+
+    //Internet communication
+
+    //GSON
+    implementation 'com.squareup.retrofit2:converter-gson:2.1.0'
+
+    // Retrofit
+    def retrofitVersion = '2.9.0'
+    implementation "com.squareup.retrofit2:retrofit:${retrofitVersion}"
+    implementation "com.squareup.retrofit2:adapter-rxjava2:${retrofitVersion}"
+    implementation "com.squareup.retrofit2:converter-moshi:${retrofitVersion}"
+
+    // okHTTP
+    def okHttpVersion = '4.9.0'
+    implementation "com.squareup.okhttp3:okhttp:$okHttpVersion"
+    implementation "com.squareup.okhttp3:logging-interceptor:$okHttpVersion"
+    implementation "com.squareup.okhttp3:okhttp-urlconnection:$okHttpVersion"
+
 }

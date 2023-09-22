@@ -2,10 +2,10 @@ package com.mixa.dictio.data.database
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
-import com.mixa.dictio.data.datasources.DictionaryDao
-import com.mixa.dictio.data.datasources.TermDao
-import com.mixa.dictio.data.models.DictionaryEntity
-import com.mixa.dictio.data.models.TermEntity
+import com.mixa.dictio.data.datasources.local.DictionaryDao
+import com.mixa.dictio.data.datasources.local.TermDao
+import com.mixa.dictio.data.models.entities.DictionaryEntity
+import com.mixa.dictio.data.models.entities.TermEntity
 
 /**
  * This is the Room database, we must declare all the entities here and provide
