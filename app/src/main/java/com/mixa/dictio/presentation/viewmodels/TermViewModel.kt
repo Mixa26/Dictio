@@ -23,8 +23,28 @@ class TermViewModel(
 
     private val subscriptions = CompositeDisposable()
     override val termState: MutableLiveData<TermState> = MutableLiveData()
-    override val insertTermState: MutableLiveData<InsertTermState> = MutableLiveData()
-    override val deleteTermState: MutableLiveData<DeleteTermState> = MutableLiveData()
+    override val insertTermState: MutableLiveData<InsertTermState?> = MutableLiveData()
+    override val deleteTermState: MutableLiveData<DeleteTermState?> = MutableLiveData()
+
+    /**
+     * Sets the state to null so that if we enter the fragment again,
+     * and the last time we added a term, it doesn't trigger a response
+     * like we added the term now when entering the fragment
+     * (it doesn't show the Snackbar). It basically "resets" the state..
+     */
+    override fun setInsertStateIdle() {
+        insertTermState.value = null
+    }
+
+    /**
+     * Sets the state to null so that if we enter the fragment again,
+     * and the last time we deleted a term, it doesn't trigger a response
+     * like we deleted the term now when entering the fragment
+     * (it doesn't show the Snackbar). It basically "resets" the state..
+     */
+    override fun setDeleteStateIdle() {
+        deleteTermState.value = null
+    }
 
     /**
      * Get's all the terms by dictionary id that it's connected to
@@ -73,7 +93,7 @@ class TermViewModel(
      */
     override fun delete(term: TermEntity) {
         val subscription = termRepository
-            .insert(term)
+            .delete(term)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(

@@ -141,16 +141,20 @@ class DictionariesFragment: Fragment() {
      * Regulates a response after a dictionary is inserted
      * into the database.
      */
-    private fun renderInsertDictState(state: InsertDictionaryState){
+    private fun renderInsertDictState(state: InsertDictionaryState?){
         when(state){
             is InsertDictionaryState.Success -> {
                 //If the action is successful, show us a message in the Snackbar.
                 Snackbar.make(binding.root, R.string.successInsertingDict, Toast.LENGTH_SHORT).show()
+                //We reset the state so it doesn't trigger the Snackbar if we enter
+                //the fragment again
+                (context as MainActivity).dictionaryViewModel.setInsertStateIdle()
             }
             is InsertDictionaryState.Error -> {
                 //If the action was a failure, alert us through a Toast.
                 Toast.makeText(context, state.messageResourceId, Toast.LENGTH_LONG).show()
             }
+            else -> {}
         }
     }
 
@@ -158,16 +162,20 @@ class DictionariesFragment: Fragment() {
      * Regulates a response after a dictionary is deleted
      * from the database
      */
-    private fun renderDeleteDictState(state: DeleteDictionaryState){
+    private fun renderDeleteDictState(state: DeleteDictionaryState?){
         when(state){
             is DeleteDictionaryState.Success -> {
                 //If the action is successful, show us a message in the Snackbar.
                 Snackbar.make(binding.root, R.string.successDeletingDict, Toast.LENGTH_SHORT).show()
+                //We reset the state so it doesn't trigger the Snackbar if we enter
+                //the fragment again
+                (context as MainActivity).dictionaryViewModel.setDeleteStateIdle()
             }
             is DeleteDictionaryState.Error -> {
                 //If the action was a failure, alert us through a Toast.
                 Toast.makeText(context, state.messageResourceId, Toast.LENGTH_LONG).show()
             }
+            else -> {}
         }
     }
 }

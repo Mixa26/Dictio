@@ -17,9 +17,11 @@ interface MainContract {
     interface DictionaryViewModel{
 
         val dictionaryState: LiveData<DictionaryState>
-        val insertDictionaryState: LiveData<InsertDictionaryState>
-        val deleteDictionaryState: LiveData<DeleteDictionaryState>
+        val insertDictionaryState: LiveData<InsertDictionaryState?>
+        val deleteDictionaryState: LiveData<DeleteDictionaryState?>
 
+        fun setInsertStateIdle()
+        fun setDeleteStateIdle()
         fun getAll()
         fun insert(dictionary: DictionaryEntity)
         fun delete(dictionary: DictionaryEntity)
@@ -28,9 +30,11 @@ interface MainContract {
     interface TermViewModel{
 
         val termState: LiveData<TermState>
-        val insertTermState: LiveData<InsertTermState>
-        val deleteTermState: LiveData<DeleteTermState>
+        val insertTermState: LiveData<InsertTermState?>
+        val deleteTermState: LiveData<DeleteTermState?>
 
+        fun setInsertStateIdle()
+        fun setDeleteStateIdle()
         fun getAllByDictId(dictionaryId: Int)
         fun insert(term: TermEntity)
         fun delete(term: TermEntity)

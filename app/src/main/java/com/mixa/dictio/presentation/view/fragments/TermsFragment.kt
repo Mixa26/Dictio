@@ -147,16 +147,20 @@ class TermsFragment(private val language: String, private val dictId: Int): Frag
      * Regulates a response after a term is inserted
      * into the database.
      */
-    private fun renderInsertTermState(state: InsertTermState){
+    private fun renderInsertTermState(state: InsertTermState?){
         when(state){
             is InsertTermState.Success -> {
                 //If the action is successful, show us a message in the Snackbar.
                 Snackbar.make(binding.root, R.string.successInsertingTerm, Toast.LENGTH_SHORT).show()
+                //We reset the state so it doesn't trigger the Snackbar if we enter
+                //the fragment again
+                (context as MainActivity).termViewModel.setInsertStateIdle()
             }
             is InsertTermState.Error -> {
                 //If the action was a failure, alert us through a Toast.
                 Toast.makeText(context, state.messageResourceId, Toast.LENGTH_LONG).show()
             }
+            else -> {}
         }
     }
 
@@ -164,16 +168,20 @@ class TermsFragment(private val language: String, private val dictId: Int): Frag
      * Regulates a response after a term is deleted
      * from the database
      */
-    private fun renderDeleteTermState(state: DeleteTermState){
+    private fun renderDeleteTermState(state: DeleteTermState?){
         when(state){
             is DeleteTermState.Success -> {
                 //If the action is successful, show us a message in the Snackbar.
                 Snackbar.make(binding.root, R.string.successDeletingTerm, Toast.LENGTH_SHORT).show()
+                //We reset the state so it doesn't trigger the Snackbar if we enter
+                //the fragment again
+                (context as MainActivity).termViewModel.setDeleteStateIdle()
             }
             is DeleteTermState.Error -> {
                 //If the action was a failure, alert us through a Toast.
                 Toast.makeText(context, state.messageResourceId, Toast.LENGTH_LONG).show()
             }
+            else -> {}
         }
     }
 

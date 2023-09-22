@@ -23,8 +23,28 @@ class DictionaryViewModel(
 
     private val subscriptions = CompositeDisposable()
     override val dictionaryState: MutableLiveData<DictionaryState> = MutableLiveData()
-    override val insertDictionaryState: MutableLiveData<InsertDictionaryState> = MutableLiveData()
-    override val deleteDictionaryState: MutableLiveData<DeleteDictionaryState> = MutableLiveData()
+    override val insertDictionaryState: MutableLiveData<InsertDictionaryState?> = MutableLiveData()
+    override val deleteDictionaryState: MutableLiveData<DeleteDictionaryState?> = MutableLiveData()
+
+    /**
+     * Sets the state to null so that if we enter the fragment/action again,
+     * and the last time we added a dictionary, it doesn't trigger a response
+     * like we added the dictionary now when entering the fragment/action
+     * (it doesn't show the Snackbar). It basically "resets" the state..
+     */
+    override fun setInsertStateIdle() {
+        insertDictionaryState.value = null
+    }
+
+    /**
+     * Sets the state to null so that if we enter the fragment/action again,
+     * and the last time we deleted a dictionary, it doesn't trigger a response
+     * like we deleted the dictionary now when entering the fragment/action
+     * (it doesn't show the Snackbar). It basically "resets" the state..
+     */
+    override fun setDeleteStateIdle() {
+        deleteDictionaryState.value = null
+    }
 
     /**
      * Get's all the dictionaries from the database and subscribes the result to be delivered
