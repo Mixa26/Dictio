@@ -1,20 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+    android:orientation="horizontal"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="100dp">
 
-    <EditText
-        android:id="@+id/languageInput"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="text"
-        android:hint="@string/language" />
+    <ImageView
+        android:id="@+id/languageFlag"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="match_parent"/>
 
-    <Button
-        android:id="@+id/createDictionaryButton"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/create" />
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="0dp"
+        android:layout_weight="2"
+        android:layout_height="100dp">
+
+        <EditText
+            android:id="@+id/languageInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="text"
+            android:hint="@string/language" />
+
+        <Button
+            android:id="@+id/createDictionaryButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/create" />
+
+    </LinearLayout>
+
+
 </LinearLayout>

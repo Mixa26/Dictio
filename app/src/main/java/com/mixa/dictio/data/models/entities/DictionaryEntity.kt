@@ -7,5 +7,6 @@ import androidx.room.PrimaryKey
 data class DictionaryEntity (
     @PrimaryKey(autoGenerate = true)
     val id: Int?,
-    var language: String
+    var language: String,
+    var flagImage: String
 )

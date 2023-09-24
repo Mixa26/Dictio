@@ -13,6 +13,7 @@ import com.mixa.dictio.data.models.entities.DictionaryEntity
 import com.mixa.dictio.presentation.recycler.differ.DictionaryDiffItemCallback
 import com.mixa.dictio.presentation.view.activities.MainActivity
 import com.mixa.dictio.presentation.view.fragments.TermsFragment
+import com.squareup.picasso.Picasso
 
 class DictionaryAdapter(diffCallback: DictionaryDiffItemCallback): ListAdapter<DictionaryEntity, DictionaryAdapter.DictionaryViewHolder>(diffCallback) {
 
@@ -38,6 +39,11 @@ class DictionaryAdapter(diffCallback: DictionaryDiffItemCallback): ListAdapter<D
         fun bind(dictionary: DictionaryEntity){
             //Set the language title for the dictionary
             itemView.findViewById<TextView>(R.id.languageTitle).text = dictionary.language
+
+            //Set the custom flag image if there is one
+            if (dictionary.flagImage.isNotEmpty()){
+                Picasso.get().load(dictionary.flagImage).into(itemView.findViewById<ImageView>(R.id.languageImage))
+            }
 
             //If the button for deleting a dictionary is selected, prompt the user with
             //a snackbar to see if he's sure of deletion.

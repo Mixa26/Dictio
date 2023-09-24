@@ -18,7 +18,7 @@ import com.mixa.dictio.data.models.entities.TermEntity
     entities = [
         DictionaryEntity::class,
         TermEntity::class],
-    version = 1,
+    version = 2,
     exportSchema = false)
 abstract class DictioDatabase : RoomDatabase(){
     abstract fun getDictionaryDao(): DictionaryDao

@@ -2,6 +2,7 @@
     <string name="app_name">Dictio</string>
     <string name="mydictionaries">My dictionaries</string>
     <string name="buttonAddDictionary">Add dictionary</string>
+    <string name="badInputDictionaryCreation">Dictionary language mustn\'t be empty!</string>
     <string name="create">Create</string>
     <string name="delete">Delete</string>
     <string name="language">Language</string>
@@ -24,4 +25,5 @@
     <string name="addTerm">Add translation</string>
     <string name="badInputTermAndTranslation">Both the term and the translation have to be inputted.</string>
     <string name="errorTranslating">Error happened while translating!</string>
+    <string name="pictureSelect">Select a picture</string>
 </resources>

@@ -1,10 +1,15 @@
 package com.mixa.dictio.presentation.view.fragments
 
+import android.app.Activity
 import android.app.AlertDialog
+import android.content.Context
+import android.content.Intent
+import android.graphics.Bitmap
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -19,6 +24,9 @@ import com.mixa.dictio.presentation.view.activities.MainActivity
 import com.mixa.dictio.presentation.view.states.DeleteDictionaryState
 import com.mixa.dictio.presentation.view.states.DictionaryState
 import com.mixa.dictio.presentation.view.states.InsertDictionaryState
+import com.squareup.picasso.Picasso
+import java.io.File
+import java.io.FileOutputStream
 
 class DictionariesFragment: Fragment() {
     //We can access all the UI xml elements from the binding.
@@ -27,6 +35,12 @@ class DictionariesFragment: Fragment() {
     //Recycler view adapter for displaying our dictionaries.
     //We submit our database lists to the adapter.
     private lateinit var recyclerViewAdapter: DictionaryAdapter
+
+    //Data for the dialog of creating a dictionary.
+    //These will be used for a custom language flag picture choosing.
+    private val pictureChosingIntentCode = 1
+    private var imgFile: String = ""
+    private lateinit var languageFlag: View
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = FragmentDictionariesBinding.inflate(layoutInflater)
@@ -81,15 +95,34 @@ class DictionariesFragment: Fragment() {
 
             dialog.setView(binding.root)
 
+            //Set the language flag variable so we can insert a picture later.
+            languageFlag = binding.languageFlag
+            //Set the default picture for the language flag.
+            Picasso.get().load(R.drawable.dictioicon).into(binding.languageFlag)
+
+            //Start the picture selecting intent if the photo is clicked
+            binding.languageFlag.setOnClickListener{
+                val pickImageIntent = Intent()
+                pickImageIntent.type = "image/*"
+                pickImageIntent.action = Intent.ACTION_PICK
+                startActivityForResult(Intent.createChooser(pickImageIntent, getString(R.string.pictureSelect)), pictureChosingIntentCode)
+            }
+
             //When the button create in the dialog is pressed.
             binding.createDictionaryButton.setOnClickListener{
 
-                //Creating the new dictionary.
-                val newDict = DictionaryEntity(null, binding.languageInput.text.toString())
-                //Adding the dictionary to the database.
-                (context as MainActivity).dictionaryViewModel.insert(newDict)
+                if (binding.languageInput.text.toString().isNotEmpty()) {
+                    //Creating the new dictionary.
+                    val newDict =
+                        DictionaryEntity(null, binding.languageInput.text.toString(), imgFile)
+                    //Adding the dictionary to the database.
+                    (context as MainActivity).dictionaryViewModel.insert(newDict)
 
-                dialog.dismiss()
+                    dialog.dismiss()
+                }
+                else{
+                    Snackbar.make(binding.root, R.string.badInputDictionaryCreation, Snackbar.LENGTH_LONG).show()
+                }
             }
 
             dialog.show()
@@ -176,6 +209,15 @@ class DictionariesFragment: Fragment() {
                 Toast.makeText(context, state.messageResourceId, Toast.LENGTH_LONG).show()
             }
             else -> {}
+        }
+    }
+
+    //Receives the result of picture choosing for the language flag.
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (requestCode == pictureChosingIntentCode && resultCode == Activity.RESULT_OK){
+            imgFile = data?.data.toString()
+
+            Picasso.get().load(imgFile).into(languageFlag as ImageView)
         }
     }
 }
