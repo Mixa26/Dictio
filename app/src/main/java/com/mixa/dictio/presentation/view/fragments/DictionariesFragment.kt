@@ -14,6 +14,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
+import com.google.android.material.tabs.TabLayout
 import com.mixa.dictio.R
 import com.mixa.dictio.data.models.entities.DictionaryEntity
 import com.mixa.dictio.databinding.DialogAddDictionaryBinding
@@ -35,6 +36,7 @@ class DictionariesFragment: Fragment() {
     //Recycler view adapter for displaying our dictionaries.
     //We submit our database lists to the adapter.
     private lateinit var recyclerViewAdapter: DictionaryAdapter
+    private var dictionariesList: List<DictionaryEntity> = listOf()
 
     //Data for the dialog of creating a dictionary.
     //These will be used for a custom language flag picture choosing.
@@ -84,6 +86,27 @@ class DictionariesFragment: Fragment() {
      * Initializes listeners for button presses and such.
      */
     private fun initListeners(){
+        //When tab is changed hide/show the add dictionaries button
+        //and refresh the list
+        binding.tabLayoutDictionaries.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
+            override fun onTabSelected(tab: TabLayout.Tab) {
+
+                when (tab.position) {
+                    0 -> {
+                        binding.addDictionaryButton.visibility = View.GONE
+                        refreshList()
+                    }
+                    1 -> {
+                        binding.addDictionaryButton.visibility = View.VISIBLE
+                        refreshList()
+                    }
+                }
+            }
+
+            override fun onTabUnselected(tab: TabLayout.Tab) {}
+            override fun onTabReselected(tab: TabLayout.Tab) {}
+        })
+
         //When a button for adding a dictionary is clicked it creates a dialog.
         binding.addDictionaryButton.setOnClickListener {
             val builder = AlertDialog.Builder(context)
@@ -113,8 +136,10 @@ class DictionariesFragment: Fragment() {
 
                 if (binding.languageInput.text.toString().isNotEmpty()) {
                     //Creating the new dictionary.
-                    val newDict =
-                        DictionaryEntity(null, binding.languageInput.text.toString(), imgFile)
+                    val newDict = DictionaryEntity(null, binding.languageInput.text.toString(), "", "")
+                    //Uncomment this line if you want to display custom images for custom languages
+                    //!note that there's a bug with it that needs fixing.
+                    //val newDict = DictionaryEntity(null, binding.languageInput.text.toString(), imgFile, "")
                     //Adding the dictionary to the database.
                     (context as MainActivity).dictionaryViewModel.insert(newDict)
 
@@ -161,7 +186,8 @@ class DictionariesFragment: Fragment() {
         when(state){
             is DictionaryState.Success -> {
                 //If the action is successful, add new dictionary to the recycler view.
-                recyclerViewAdapter.submitList(state.dictionaries)
+                dictionariesList = state.dictionaries
+                refreshList()
             }
             is DictionaryState.Error -> {
                 //If the action was a failure, alert us through a Toast.
@@ -210,6 +236,24 @@ class DictionariesFragment: Fragment() {
             }
             else -> {}
         }
+    }
+
+    /**
+     * Regulates which items to present in the recycler view based
+     * on which tab is pressed (default languages/custom languages)
+     */
+    private fun refreshList(){
+        val tabPos = binding.tabLayoutDictionaries.selectedTabPosition
+        val filteredList = mutableListOf<DictionaryEntity>()
+        for (dictionary in dictionariesList){
+            if (tabPos == 0 && dictionary.translationCode.isNotEmpty()){
+                filteredList.add(dictionary)
+            }
+            else if(tabPos == 1 && dictionary.translationCode.isEmpty()){
+                filteredList.add(dictionary)
+            }
+        }
+        recyclerViewAdapter.submitList(filteredList)
     }
 
     //Receives the result of picture choosing for the language flag.

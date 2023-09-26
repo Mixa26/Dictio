@@ -88,6 +88,24 @@ class DictionaryViewModel(
     }
 
     /**
+     * Inserts multiple dictionaries to the database.
+     */
+    override fun insertAll(dictionary: List<DictionaryEntity>) {
+        val subscription = dictionaryRepository
+            .insertAll(dictionary)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(
+                {},
+                {
+                    insertDictionaryState.value = InsertDictionaryState.Error(R.string.errorInsertingDict)
+                    Timber.e(it)
+                }
+            )
+        subscriptions.add(subscription)
+    }
+
+    /**
      * Deletes a dictionary from the database.
      */
     override fun delete(dictionary: DictionaryEntity) {

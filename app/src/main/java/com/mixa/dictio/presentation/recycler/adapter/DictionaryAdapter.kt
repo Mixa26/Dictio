@@ -13,7 +13,10 @@ import com.mixa.dictio.data.models.entities.DictionaryEntity
 import com.mixa.dictio.presentation.recycler.differ.DictionaryDiffItemCallback
 import com.mixa.dictio.presentation.view.activities.MainActivity
 import com.mixa.dictio.presentation.view.fragments.TermsFragment
+import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
+import timber.log.Timber
+import java.io.File
 
 class DictionaryAdapter(diffCallback: DictionaryDiffItemCallback): ListAdapter<DictionaryEntity, DictionaryAdapter.DictionaryViewHolder>(diffCallback) {
 
@@ -42,17 +45,32 @@ class DictionaryAdapter(diffCallback: DictionaryDiffItemCallback): ListAdapter<D
 
             //Set the custom flag image if there is one
             if (dictionary.flagImage.isNotEmpty()){
-                Picasso.get().load(dictionary.flagImage).into(itemView.findViewById<ImageView>(R.id.languageImage))
+                if (dictionary.flagImage.startsWith("content")){
+                    Picasso.get().load(dictionary.flagImage).into(itemView.findViewById<ImageView>(R.id.languageImage))
+                }
+                else{
+                    (itemView.findViewById<ImageView>(R.id.languageImage) as ImageView).setImageResource(dictionary.flagImage.toInt())
+                }
             }
 
-            //If the button for deleting a dictionary is selected, prompt the user with
-            //a snackbar to see if he's sure of deletion.
-            itemView.findViewById<ImageView>(R.id.deleteDictImage).setOnClickListener{
-                val mainActivity = (itemView.context as MainActivity)
-                Snackbar.make(mainActivity.binding.root, R.string.confirmationDictDeletion, Snackbar.LENGTH_SHORT)
-                    .setAction(R.string.delete, View.OnClickListener { mainActivity.dictionaryViewModel.delete(dictionary) })
-                    .show()
+            //The default languages that come with the app
+            //have translations codes and we don't want
+            //to let the user delete them
+            if (dictionary.translationCode.isNotEmpty()){
+                //Remove the icon for deletion if it's a default language that comes with the app
+                itemView.findViewById<ImageView>(R.id.deleteDictImage).visibility = View.GONE
             }
+            else{
+                //If the button for deleting a dictionary is selected, prompt the user with
+                //a snackbar to see if he's sure of deletion.
+                itemView.findViewById<ImageView>(R.id.deleteDictImage).setOnClickListener{
+                    val mainActivity = (itemView.context as MainActivity)
+                    Snackbar.make(mainActivity.binding.root, R.string.confirmationDictDeletion, Snackbar.LENGTH_SHORT)
+                        .setAction(R.string.delete, View.OnClickListener { mainActivity.dictionaryViewModel.delete(dictionary) })
+                        .show()
+                }
+            }
+
 
             //If the dictionary is selected we want to open it's Terms page.
             itemView.setOnClickListener{
@@ -62,7 +80,7 @@ class DictionaryAdapter(diffCallback: DictionaryDiffItemCallback): ListAdapter<D
                 //the DataEntity is first created with data and now id, inserted into the database
                 //and then it get is id.
                 if (dictionary.id != null){
-                    (itemView.context as MainActivity).supportFragmentManager.beginTransaction().replace(R.id.mainActivityLayout, TermsFragment(dictionary.language, dictionary.id)).commit()
+                    (itemView.context as MainActivity).supportFragmentManager.beginTransaction().replace(R.id.mainActivityLayout, TermsFragment(dictionary)).commit()
                 }
             }
         }

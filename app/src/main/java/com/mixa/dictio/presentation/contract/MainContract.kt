@@ -26,6 +26,7 @@ interface MainContract {
         fun setDeleteStateIdle()
         fun getAll()
         fun insert(dictionary: DictionaryEntity)
+        fun insertAll(dictionary: List<DictionaryEntity>)
         fun delete(dictionary: DictionaryEntity)
     }
 

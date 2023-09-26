@@ -20,6 +20,10 @@ class DictionaryRepositoryImpl(
         return database.insert(dictionary)
     }
 
+    override fun insertAll(dictionary: List<DictionaryEntity>): Completable {
+        return database.insertAll(dictionary)
+    }
+
     override fun delete(dictionary: DictionaryEntity): Completable {
         return database.delete(dictionary)
     }

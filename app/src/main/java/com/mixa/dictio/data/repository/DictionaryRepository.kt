@@ -11,5 +11,6 @@ interface DictionaryRepository {
 
     fun getAll(): Observable<List<DictionaryEntity>>
     fun insert(dictionary: DictionaryEntity): Completable
+    fun insertAll(dictionary: List<DictionaryEntity>): Completable
     fun delete(dictionary: DictionaryEntity): Completable
 }

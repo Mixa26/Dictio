@@ -22,6 +22,9 @@ interface DictionaryDao {
     @Insert( onConflict = OnConflictStrategy.REPLACE)
     abstract fun insert(dictionary: DictionaryEntity): Completable
 
+    @Insert( onConflict = OnConflictStrategy.REPLACE)
+    abstract fun insertAll(dictionary: List<DictionaryEntity>): Completable
+
     @Delete
     abstract fun delete(dictionary: DictionaryEntity): Completable
 
