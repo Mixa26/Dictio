@@ -23,11 +23,11 @@ it right away to the dictionary.<br>
 I've used libretranslate API for my app because I haven't found any free online API's<br>
 for translation(or I haven't searched long enough >:) ).
 To setup libretranslate it you're gonna have to download it from their github page:<br>
-https://github.com/LibreTranslate/LibreTranslate
-and then install it using python:<br>
-pip install libretranslate<br>
-I had to manually find the folder of the installation and run the API using:<br>
-python main.py<br>
+https://github.com/LibreTranslate/LibreTranslate<br>
+and then install it using python:<br><br>
+pip install libretranslate<br><br>
+I had to manually find the folder of the installation and run the API using:<br><br>
+python main.py<br><br>
 where it did some downloads and the API was up and running on http://localhost:5000/translate<br>
 <hr>
 
