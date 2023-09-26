@@ -1,10 +1,13 @@
 package com.mixa.dictio.presentation.view.fragments
 
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.compose.ui.text.toLowerCase
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
@@ -28,6 +31,7 @@ class TermsFragment(private val dictionary: DictionaryEntity): Fragment() {
     //Recycler view adapter for displaying our terms.
     //We submit our database lists to the adapter.
     private lateinit var recyclerViewAdapter: TermAdapter
+    private var termsList: List<TermEntity> = listOf()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
 
@@ -104,6 +108,18 @@ class TermsFragment(private val dictionary: DictionaryEntity): Fragment() {
             }
         }
 
+        binding.termSearchInput.addTextChangedListener(
+            object : TextWatcher {
+                override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+
+                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                    refreshList(s.toString())
+                }
+
+                override fun afterTextChanged(s: Editable?) {}
+            }
+        )
+
         //When a term is added this listener is triggered on the button click.
         binding.addTermButton.setOnClickListener{
             if (binding.termForeign.text.toString().isNotEmpty() && binding.termMeaning.text.toString().isNotEmpty() && dictionary.id != null){
@@ -158,7 +174,10 @@ class TermsFragment(private val dictionary: DictionaryEntity): Fragment() {
         when(state){
             is TermState.Success -> {
                 //If the action is successful, add new term to the recycler view.
+                termsList = state.terms
                 recyclerViewAdapter.submitList(state.terms)
+                //Clear the search if new data has been found and gathered from the DB.
+                binding.termSearchInput.setText("")
             }
             is TermState.Error -> {
                 //If the action was a failure, alert us through a Toast.
@@ -227,6 +246,27 @@ class TermsFragment(private val dictionary: DictionaryEntity): Fragment() {
                 Toast.makeText(context, state.messageResourceId, Toast.LENGTH_LONG).show()
             }
         }
+    }
+
+    /**
+     * Regulates which term to present based on the search
+     */
+    private fun refreshList(search: String){
+        //If the search is empty bring back all the terms
+        if (search.isEmpty()){
+            recyclerViewAdapter.submitList(termsList)
+        }
+
+        val filteredList = mutableListOf<TermEntity>()
+
+        //Find all the terms that contain the text inserted in the search input
+        for (term in termsList){
+            if (term.term.lowercase().contains(search.lowercase()) || term.translation.lowercase().contains(search.lowercase())){
+                filteredList.add(term)
+            }
+        }
+
+        recyclerViewAdapter.submitList(filteredList)
     }
 
     override fun onDestroyView() {

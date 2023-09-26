@@ -51,6 +51,12 @@
 
     </LinearLayout>
 
+    <EditText
+        android:id="@+id/termSearchInput"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:hint="@string/searchTermHint"/>
+
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
