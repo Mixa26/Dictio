@@ -2,9 +2,9 @@
 An android app made as a dictionary for learning languages.
 
 # The idea behind the app
-Since I'm studying Italian I have a small dictionary in which I write new<br>
-words I'm supposed to learn, so I thought it would be useful if I had a<br>
-phone app on which I could translate the words and add them to the dictionary<br>
+Since I'm studying Italian, I have a small dictionary in which I write new<br>
+words that I'm supposed to learn, so I thought it would be useful if I had a<br>
+phone app on which I could translate them, and add them to the dictionary<br>
 right away. Boom Dictio was invented. As the name suggests it's a shorter<br>
 version of the word Dictionary.<br>
 <hr>
@@ -22,7 +22,7 @@ it right away to the dictionary.<br>
 # Setting up the translator
 I've used libretranslate API for my app because I haven't found any free online API's<br>
 for translation(or I haven't searched long enough >:) ).
-To setup libretranslate it you're gonna have to download it from their github page:<br>
+To setup libretranslate you're gonna have to download it from their github page:<br>
 https://github.com/LibreTranslate/LibreTranslate<br>
 and then install it using python:<br><br>
 pip install libretranslate<br><br>
