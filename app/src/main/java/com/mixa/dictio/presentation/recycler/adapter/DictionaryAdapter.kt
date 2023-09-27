@@ -52,6 +52,10 @@ class DictionaryAdapter(diffCallback: DictionaryDiffItemCallback): ListAdapter<D
                     (itemView.findViewById<ImageView>(R.id.languageImage) as ImageView).setImageResource(dictionary.flagImage.toInt())
                 }
             }
+            else{
+                //If there is no image load the default Dictio icon
+                (itemView.findViewById<ImageView>(R.id.languageImage) as ImageView).setImageResource(R.drawable.dictioicon)
+            }
 
             //The default languages that come with the app
             //have translations codes and we don't want
